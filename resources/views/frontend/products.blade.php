@@ -34,7 +34,7 @@
 {{--                    </div>--}}
 
                     <div class="aside">
-                        <h3 class="aside-title">Thể loại</h3>
+                        <h3 class="aside-title">Danh mục sản phẩm</h3>
                         <ul class="list-links">
                             @foreach($categories as $category)
                                 <li>
@@ -42,6 +42,52 @@
                                 </li>
                             @endforeach
                         </ul>
+                    </div>
+
+                    <div class="aside">
+                        <h3 class="aside-title">Mức giá</h3>
+                        <form action="{{ route('frontend.product.search') }}" method="get">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="0-1000000" name="price" id="defaultCheck1" onChange="this.form.submit()"
+                                    @if(isset($price) && $price == '0-1000000')
+                                        checked
+                                    @endif
+                                >
+                                <label class="form-check-label" for="defaultCheck1" style="font-size: 16px">
+                                    0 - 1.000.000
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1000000-5000000" name="price" id="defaultCheck2" onChange="this.form.submit()"
+                                   @if(isset($price) && $price == '1000000-5000000')
+                                       checked
+                                    @endif
+                                >
+                                <label class="form-check-label" for="defaultCheck2" style="font-size: 16px">
+                                    1.000.000 - 5.000.000
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="5000000-10000000" name="price" id="defaultCheck2" onChange="this.form.submit()"
+                                   @if(isset($price) && $price == '5000000-10000000')
+                                       checked
+                                    @endif
+                                >
+                                <label class="form-check-label" for="defaultCheck2" style="font-size: 16px">
+                                    5.000.000 - 10.000.000
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="10000000" name="price" id="defaultCheck2" onChange="this.form.submit()"
+                                    @if(isset($price) && $price == '10000000')
+                                       checked
+                                    @endif
+                                >
+                                <label class="form-check-label" for="defaultCheck2" style="font-size: 16px">
+                                    Lớn hơn 10.000.000
+                                </label>
+                            </div>
+                        </form>
                     </div>
                     <!-- /aside widget -->
                 </div>
@@ -87,13 +133,6 @@
                                                             VND
                                                         </del>
                                                     @endif</h3>
-                                                <div class="product-rating">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o empty"></i>
-                                                </div>
                                                 <h2 class="product-name"><a href="{{ route('frontend.product-page.index', $product->slug) }}">{{ $product->name }}</a></h2>
                                                 <span>Đã bán: {{ $product->sold }}</span>
                                             </div>

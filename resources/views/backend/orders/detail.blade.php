@@ -73,20 +73,20 @@
                                     <th>Tên sản phẩm</th>
                                     <th style="text-align: center">Số lượng</th>
                                     <th>Giá bán</th>
-                                    <th>Giá khuyến mại</th>
+{{--                                    <th>Giá khuyến mại</th>--}}
                                     <th>Thành tiền</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($products as $product)
+                                @foreach($attributes as $attribute)
                                     <tr>
                                         <td><a style="text-decoration: none"
-                                               href="{{ route('backend.product.show', $product->id) }}">{{ $product->name }}</a>
+                                               href="{{ route('backend.product.show', $attribute->product->id) }}">{{ $attribute->product->name }}</a>
                                         </td>
-                                        <td style="text-align: center">{{number_format($product->total_order)}}</td>
-                                        <td>{{number_format($product->origin_price)}} VND</td>
-                                        <td>{{number_format($product->sale_price)}} VND</td>
-                                        <td>{{number_format($product->sale_price * $product->total_order)}} VND</td>
+                                        <td style="text-align: center">{{number_format($attribute->total_order)}}</td>
+                                        <td>{{number_format($attribute->price)}} VND</td>
+{{--                                        <td>{{number_format($attribute->product->sale_price)}} VND</td>--}}
+                                        <td>{{number_format($attribute->price * $attribute->total_order)}} VND</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

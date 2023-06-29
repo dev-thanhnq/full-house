@@ -58,15 +58,7 @@
                                             <td>{{ $product->publishing_company ? $product->publishing_company->name : 'Đang cập nhật' }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Số lượng:</th>
-                                            <td>{{ number_format($product->total) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Giá bán:</th>
-                                            <td>{{ number_format($product->origin_price) }} VND</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Giá khuyến mãi:</th>
+                                            <th>Giá hiển thị:</th>
                                             <td>{{ number_format($product->sale_price) }} VND</td>
                                         </tr>
                                         <tr>
@@ -89,6 +81,24 @@
                                             <th>Ngày tạo:</th>
                                             <td>{{ date_format($product->created_at, "d/m/Y") }}</td>
                                         </tr>
+                                    </table>
+                                    <table class="table table-bordered table-striped" style="width: 100%; margin-top: 50px">
+                                        <thead>
+                                        <tr>
+                                            <th>Size</th>
+                                            <th>Giá bán</th>
+                                            <th style="text-align: center">Số lượng</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($product->attributes as $attribute)
+                                            <tr>
+                                                <td>{{ $attribute->name }}</td>
+                                                <td>{{ $attribute->price }} VND</td>
+                                                <td>{{ $attribute->total }}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
                                     </table>
                                 </form>
                             </div>

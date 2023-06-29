@@ -9,13 +9,48 @@
             </ul>
         </div>
     </div>
+    <style>
+        .buttons {
+            background: #dfdfdf;
+            padding: 4px;
+            border-radius: 3px;
+            position: relative;
+            width: fit-content;
+            margin: 10px 0 30px 0;
+        }
+
+        .buttons input {
+            appearance: none;
+            cursor: pointer;
+            border-radius: 2px;
+            padding: 5px 10px;
+            background: #3f414d;
+            color: #ececec;
+            font-size: 15px;
+            font-family: sans-serif;
+            transition: all 0.1s;
+        }
+
+        .buttons input:checked {
+            background: #f8694a;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 1px 0px #808080;
+        }
+
+        .buttons input::before {
+            content: attr(label);
+            text-align: center;
+        }
+    </style>
     <!-- /BREADCRUMB -->
     <script type="text/javascript">
         function getProductAttribute(data) {
             var price = document.getElementById("product-price");
+            var total = document.getElementById("total");
             var product_attribute_id = document.getElementById("product-attribute-id");
             product_attribute_id.setAttribute('value', data.value);
             price.innerHTML = data.getAttribute('price');
+            total.innerHTML = data.getAttribute('total');
         }
     </script>
 @endsection
@@ -57,26 +92,25 @@
                             @if(isset($product->category))
                             <p style="font-size: 18px; font-family: 'system-ui'"><strong>Danh mục:</strong> {{ $product->category->name }}</p>
                             @endif
-                            <p style="font-size: 18px; font-family: 'system-ui'"><strong>Số lượng:</strong> {{ number_format($product->total) }}</p>
+                            <p style="font-size: 18px; font-family: 'system-ui'"><strong>Số lượng tồn kho:</strong> <span id="total">{{ number_format($product->attributes[0]->total) }}</span></p>
                             <p style="font-size: 18px; font-family: 'system-ui'"><strong>Nhà sản xuất:</strong> {{ $product->publishing_company ? $product->publishing_company->name : 'Đang cập nhật' }}
                             </p>
+                            <div class="buttons">
                             @foreach($product->attributes as $key => $attribute)
-                            <div class="form-check form-check-inline">
                                 <input
-                                    class="form-check-input"
+                                    label="{{ $attribute->name }}"
                                     type="radio"
                                     name="product_attribute"
                                     id="inlineRadio1"
                                     value="{{ $attribute->id }}"
                                     price="{{ $attribute->price }}"
+                                    total="{{ $attribute->total }}"
                                     onclick="getProductAttribute(this);"
                                     @if($key === 0)
                                         checked
-                                    @endif
-                                >
-                                <label class="form-check-label" for="inlineRadio1"><p style="font-size: 18px; font-family: 'system-ui'">{{ $attribute->name }}</p></label>
-                            </div>
+                                    @endif>
                             @endforeach
+                            </div>
                             <h3 class="product-price" id="product-price">{{ $product->attributes[0]->price }}</h3>
 
                             <div class="product-btns">

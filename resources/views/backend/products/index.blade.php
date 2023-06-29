@@ -69,9 +69,8 @@
                                 <th>Tên sản phẩm</th>
                                 <th style="text-align: center">Ảnh</th>
                                 <th style="text-align: center">Số lượng</th>
-                                <th>Giá bán</th>
-                                <th>Giá khuyến mãi</th>
-                                <th style="text-align: center">Giảm giá(%)</th>
+                                <th>Giá hiển thị</th>
+                                <th style="text-align: center">Kích thước</th>
                                 <th style="text-align: center">Trạng thái</th>
                                 <th style="text-align: center">Hành động</th>
                             </tr>
@@ -87,16 +86,20 @@
                                     <td style="text-align: center;">
                                         @if ($product->image)
                                             <img
-                                                style="width: 160px;height: 200px;object-fit: cover;"
+                                                style="width: 200px;height: 200px;object-fit: cover;"
                                                 src="/{{$product->image}}">
                                         @else
-                                            <img style="width: 160px;height: 200px;object-fit: cover;"
+                                            <img style="width: 200px;height: 200px;object-fit: cover;"
                                                  src="/frontend/img/product-default.jpg">
                                         @endif</td>
                                     <td style="text-align: center">{{ number_format($product->total) }}</td>
-                                    <td>{{ number_format($product->origin_price) }} VND</td>
                                     <td>{{ number_format($product->sale_price) }} VND</td>
-                                    <td style="text-align: center"><span class="badge badge-success">{{ $product->discount_percent }}%</span>
+                                    <td style="text-align: center">
+                                        @foreach($product->attributes as $key => $value)
+                                            <span class="badge badge-success">
+                                                {{ $value->name }}
+                                            </span>
+                                        @endforeach
                                     </td>
                                     <td style="text-align: center">
                                         @if($product->status == 0)

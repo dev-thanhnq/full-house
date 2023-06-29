@@ -25,12 +25,11 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => 'required|min:1|max:255',
-            'origin_price' => 'min:1',
+            'sale_price' => 'required|min:1',
             'discount_percent' => 'nullable|integer|min:1',
             'total' => 'integer|min:1',
             'content' => 'max:5000',
             'image' => 'image|mimes:jpg,png,jpeg,gif,svg|required|max:10000',
-            'images[]' => 'image|mimes:jpg,png,jpeg,gif,svg|max:10000',
             'status' => 'required|boolean',
         ];
     }

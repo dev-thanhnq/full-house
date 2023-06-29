@@ -21,6 +21,7 @@ class CartController extends Controller
     {
         $productAttribute = Attribute::find($request->get('attribute_id'));
         Cart::add($productAttribute->id, $productAttribute->product->name, 1, $productAttribute->price ?? 0, 0, [
+            'attribute_name' => $productAttribute->name,
             'image' => $productAttribute->product->image,
             'discount_percent' => $product->discount_percent ?? 0,
             'origin_price' => $product->origin_price ?? 0,

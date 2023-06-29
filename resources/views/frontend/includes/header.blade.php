@@ -35,6 +35,11 @@
                             </div>
                             <strong class="text-uppercase">Tài khoản <i class="fa fa-caret-down"></i></strong>
                         </div>
+{{--                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">--}}
+{{--                            <a class="dropdown-item" href="#">Action</a>--}}
+{{--                            <a class="dropdown-item" href="#">Another action</a>--}}
+{{--                            <a class="dropdown-item" href="#">Something else here</a>--}}
+{{--                        </div>--}}
                         @if(\Illuminate\Support\Facades\Auth::user())
                             <a href="#" class="text-uppercase">{{ \Illuminate\Support\Facades\Auth::user()->name }}</a>
                         @else
@@ -47,12 +52,17 @@
                                     <li>
                                         <form action="{{ route('logout') }}" method="POST">
                                             @csrf
-                                            <a>
-                                                <button class="dropdown-item"><i class="btn fa fa-sign-out"
-                                                                                 aria-hidden="true"></i> Đăng xuất
+                                            <a type="submit">
+                                                <button style="width: 100%; text-align: left; margin-bottom: 7px" class="dropdown-item btn btn-danger">
+                                                    <i class="btn fa fa-sign-out" aria-hidden="true"></i> Đăng xuất
                                                 </button>
                                             </a>
                                         </form>
+                                    </li>
+                                    <li>
+                                        <button style="width: 100%; text-align: left; margin-bottom: 7px" class="dropdown-item btn btn-danger">
+                                            <i class="btn fa fa-shopping-cart" aria-hidden="true"></i> Đơn hàng
+                                        </button>
                                     </li>
                                 @else
                                     <li><a href="{{ route('login.form') }}"><i class="fa fa-unlock-alt"></i> Đăng

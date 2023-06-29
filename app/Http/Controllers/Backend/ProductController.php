@@ -83,13 +83,7 @@ class ProductController extends Controller
         $product->category_id = $request->get('category_id');
         $product->author_id = $request->get('author_id');
         $product->publishing_company_id = $request->get('publishing_company_id');
-//        $product->origin_price = (int)$origin_price;
-//        $product->discount_percent = $request->get('discount_percent') ?: 0;
-//        if (!empty($request->get('discount_percent')) && $request->get('discount_percent') > 0) {
-//            $product->sale_price = ($origin_price / 100) * (100 - (int)$request->get('discount_percent'));
-//        } else {
-//            $product->sale_price = (int)$origin_price;
-//        }
+        $product->sale_price = (int)str_replace(',', '', $request->get('sale_price'));
         $product->content = $request->get('content');
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -98,7 +92,7 @@ class ProductController extends Controller
         }
         $product->status = $request->get('status');
         $product->pages_count = '0';
-        $product->total = (int)$request->get('total');
+        $product->total = ($request->get('attribute_total_1') ?? 0) + ($request->get('attribute_total_2') ?? 0) + ($request->get('attribute_total_3') ?? 0);
         $product->status = $request->get('status');
         $product->user_id = Auth::user()->id;
         $product->save();
@@ -114,12 +108,31 @@ class ProductController extends Controller
                 $image->save();
             }
         }
+        // size 1
         $attribute = new Attribute();
-        $attribute->product_id =  $product->id;
+        $attribute->product_id = $product->id;
         $attribute->name = $request->get('attribute_name_1');
-        $attribute->price = $request->get('attribute_price_1');
+        $attribute->price = (int)str_replace(',', '', $request->get('attribute_price_1'));
         $attribute->total = $request->get('attribute_total_1');
         $attribute->save();
+        // size 2
+        if ($request->has('attribute_name_2') && $request->get('attribute_name_3')) {
+            $attribute = new Attribute();
+            $attribute->product_id = $product->id;
+            $attribute->name = $request->get('attribute_name_2');
+            $attribute->price = (int)str_replace(',', '', $request->get('attribute_price_2'));
+            $attribute->total = $request->get('attribute_total_2');
+            $attribute->save();
+        }
+        // size 3
+        if ($request->has('attribute_name_3') && $request->get('attribute_name_3')) {
+            $attribute = new Attribute();
+            $attribute->product_id = $product->id;
+            $attribute->name = $request->get('attribute_name_3');
+            $attribute->price = (int)str_replace(',', '', $request->get('attribute_price_3'));
+            $attribute->total = $request->get('attribute_total_3');
+            $attribute->save();
+        }
         Alert::success('Thành công', 'Cập nhật thành công!');
 
         return redirect()->route('backend.product.index');

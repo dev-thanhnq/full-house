@@ -13,4 +13,9 @@ class Attribute extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class);
+    }
 }

@@ -157,11 +157,27 @@ class ProductController extends Controller
             $query->where('name', 'LIKE', '%' . $request->input('keyword') . '%')
                 ->orderBy('sold', 'DESC');
         }
+        if ($request->has('price') && strlen($request->input('price')) > 0) {
+            if ($request->input('price') === '1-1000000') {
+                $query->whereBetween('sale_price', [0, 1000000])
+                    ->orderBy('sold', 'DESC');
+            } elseif ($request->input('price') === '1000000-5000000') {
+                $query->whereBetween('sale_price', [1000000, 5000000])
+                    ->orderBy('sold', 'DESC');
+            } elseif ($request->input('price') === '5000000-10000000') {
+                $query->whereBetween('sale_price', [5000000, 10000000])
+                    ->orderBy('sold', 'DESC');
+            } elseif ($request->input('price') === '10000000') {
+                $query->where('sale_price', '>', '10000000')
+                    ->orderBy('sold', 'DESC');
+            }
+        }
         $products = $query->paginate(12);
         $categories = Category::all();
         return view('frontend.products')->with([
             'products' => $products,
-            'categories' => $categories
+            'categories' => $categories,
+            'price' => $request->get('price') ?? null
         ]);
     }
 }

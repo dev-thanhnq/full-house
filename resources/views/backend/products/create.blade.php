@@ -74,41 +74,99 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Giá bán <span style="color: red"> *</span></label>
+                                <input value="{{old('sale_price')}}" type="text" class="form-control input-element" id=""
+                                       placeholder="Gía bán"
+                                       name="sale_price">
+                                @error('sale_price')
+                                <p style="color: red">{{ $message }}</p>
+                                @enderror
+                            </div>
                             <div class="row">
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label>Loại 1 <span style="color:red;"> *</span></label>
+                                        <label>Kích cỡ 1<span style="color:red;"> *</span></label>
                                         <input value="{{old('attribute_name_1')}}" type="text"
                                                class="form-control"
-                                               placeholder="Nhập giá bán"
+                                               placeholder="Kích cỡ"
                                                name="attribute_name_1">
-                                        @error('origin_price')
-                                        <p style="color: red">{{ $message }}</p>
-                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label>Giá</label>
-                                        <input value="{{old('attribute_price_1')}}" min="1" type="number"
+                                        <label>Giá bán</label>
+                                        <input value="{{old('attribute_price_1')}}" type="text"
                                                class=" form-control input-element2"
-                                               placeholder="Nhập %"
+                                               placeholder="Giá bán"
                                                name="attribute_price_1">
-                                        @error('discount_percent')
-                                        <p style="color: red">{{ $message }}</p>
-                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label>Số lượng <span style="color: red"> *</span></label>
-                                        <input value="{{old('attribute_total_1')}}" type="number" min="1"
-                                               class=" form-control input-element2"
-                                               placeholder="Nhập số lượng"
+                                        <input value="{{old('attribute_total_1')}}" type="number"
+                                               class=" form-control"
+                                               placeholder="Số lượng"
                                                name="attribute_total_1">
-                                        @error('total')
-                                        <p style="color: red">{{ $message }}</p>
-                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Kích cỡ 2<span style="color:red;"> *</span></label>
+                                        <input value="{{old('attribute_name_2')}}" type="text"
+                                               class="form-control"
+                                               placeholder="Kích cỡ"
+                                               name="attribute_name_2">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Giá bán</label>
+                                        <input value="{{old('attribute_price_2')}}" type="text"
+                                               class=" form-control input-element3"
+                                               placeholder="Giá bán"
+                                               name="attribute_price_2">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Số lượng <span style="color: red"> *</span></label>
+                                        <input value="{{old('attribute_total_2')}}" type="number" min="1"
+                                               class=" form-control"
+                                               placeholder="Số lượng"
+                                               name="attribute_total_2">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Kích cỡ 3<span style="color:red;"> *</span></label>
+                                        <input value="{{old('attribute_name_3')}}" type="text"
+                                               class="form-control"
+                                               placeholder="Kích cỡ"
+                                               name="attribute_name_3">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Giá bán</label>
+                                        <input value="{{old('attribute_price_3')}}" min="1" type="text"
+                                               class=" form-control input-element4"
+                                               placeholder="Giá bán"
+                                               name="attribute_price_3">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Số lượng <span style="color: red"> *</span></label>
+                                        <input value="{{old('attribute_total_3')}}" type="number" min="1"
+                                               class=" form-control"
+                                               placeholder="Số lượng"
+                                               name="attribute_total_3">
                                     </div>
                                 </div>
                             </div>
@@ -125,26 +183,23 @@
                                 <label for="exampleInputFile">Hình ảnh sản phẩm<span style="color: red"> *</span></label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" id="img" name="image" accept="image/*">
-                                        {{--                                        <input type="file" class="custom-file-input" id="exampleInputFile" name="image">--}}
-                                        {{--                                        <label class="custom-file-label" for="exampleInputFile">Chọn tệp</label>--}}
+                                        <script>
+                                            var loadFile = function(event) {
+                                                var output = document.getElementById('output');
+                                                output.src = URL.createObjectURL(event.target.files[0]);
+                                                output.onload = function() {
+                                                    URL.revokeObjectURL(output.src) // free memory
+                                                }
+                                            };
+                                        </script>
+                                        <input type="file" id="img" name="image" accept="image/*" onchange="loadFile(event)">
                                     </div>
                                 </div>
                                 @error('image')
                                 <p style="color: red">{{ $message }}</p>
                                 @enderror
                             </div>
-                            {{--                            <div class="form-group">--}}
-                            {{--                                <label for="exampleInputFile">Hình ảnh liên quan</label>--}}
-                            {{--                                <div class="input-group">--}}
-                            {{--                                    <div class="custom-file">--}}
-                            {{--                                        <input type="file" id="img" name="images[]" accept="image/*" multiple>--}}
-                            {{--                                    </div>--}}
-                            {{--                                </div>--}}
-                            {{--                                @error('images')--}}
-                            {{--                                <p style="color: red">{{ $message }}</p>--}}
-                            {{--                                @enderror--}}
-                            {{--                            </div>--}}
+                            <img id="output" style="width: 200px; height: 200px; object-fit: cover" />
                             <div class="form-group">
                                 <label>Trạng thái sản phẩm <span style="color: red"> *</span></label>
                                 <select class="form-control select2" style="width: 100%;" name="status">
@@ -189,6 +244,14 @@
             numeralThousandsGroupStyle: 'thousand',
         });
         var cleave2 = new Cleave('.input-element2', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand',
+        });
+        var cleave3 = new Cleave('.input-element3', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand',
+        });
+        var cleave4 = new Cleave('.input-element4', {
             numeral: true,
             numeralThousandsGroupStyle: 'thousand',
         });

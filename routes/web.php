@@ -119,7 +119,7 @@ Route::group([
     Route::delete('/cart/remove/{id}', 'CartController@remove')->name('frontend.cart.remove');
     Route::put('/cart/update/{id}', 'CartController@update')->name('frontend.cart.update');
     //Checkout
-    Route::get('/checkout', 'CartController@checkout')->name('frontend.checkout');
+    Route::get('/checkout', 'CartController@checkout')->name('frontend.checkout')->middleware(['auth']);
 });
 //Order
 Route::group([

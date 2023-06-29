@@ -35,6 +35,8 @@
                                                                style="width: 200px"></td>
                                         <td class="details">
                                             <a href="#">{{ $item->name }}</a>
+                                            <br>
+                                            <p class="primary-color">Size: {{ $item->options->attribute_name }}</p>
                                         </td>
                                         <td class="price text-center"><strong>{{ number_format($item->price) }}
                                                 VND</strong><br>
@@ -58,9 +60,9 @@
                                 <tr>
                                     <th class="empty" colspan="3"></th>
                                     <th>Tổng tiền</th>
-{{--                                    <th colspan="2" class="total">{{ number_format(Gloudemans\Shoppingcart\Facades\Cart::total()) }}--}}
-{{--                                        VNĐ--}}
-{{--                                    </th>--}}
+                                    <th colspan="2" class="total">{{ Gloudemans\Shoppingcart\Facades\Cart::total() }}
+                                        VNĐ
+                                    </th>
                                 </tr>
                                 </tfoot>
                             </table>

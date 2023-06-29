@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
+use App\Models\Attribute;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -58,14 +59,17 @@ class OrderController extends Controller
         $order->status = 1;
         $order->save();
         foreach (Cart::content() as $item) {
-            $product = Product::find($item->id);
-            DB::table('order_product')->insert([
+            $attribute = Attribute::find($item->id);
+            DB::table('order_attribute')->insert([
                 'order_id' => $order->id,
-                'product_id' => $product->id,
-                'price' => $product->sale_price,
+                'attribute_id' => $attribute->id,
+                'price' => $attribute->price,
                 'total' => $item->qty,
                 'created_at' => Carbon::now('Asia/Ho_Chi_Minh')
             ]);
+            $attribute->total -= $item->qty;
+            $attribute->save();
+            $product = Product::find($attribute->product_id);
             $product->total -= $item->qty;
             $product->sold += $item->qty;
             $product->save();
@@ -85,13 +89,13 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::find($id);
-        $prod = DB::table('order_product')->where('order_id', $order->id)->get();
-        $products = collect($prod)->pluck('product_id')->toArray();
-        $products = Product::whereIn('id', $products)->get();
-        foreach ($products as $product) {
+        $prod = DB::table('order_attribute')->where('order_id', $order->id)->get();
+        $attributes = collect($prod)->pluck('attribute_id')->toArray();
+        $attributes= Attribute::whereIn('id', $attributes)->get();
+        foreach ($attributes as $attribute) {
             foreach ($prod as $pro) {
-                if ($product->id == $pro->product_id) {
-                    $product['total_order'] = $pro->total;
+                if ($attribute->id == $pro->attribute_id) {
+                    $attribute['total_order'] = $pro->total;
                 }
             }
         }
@@ -99,7 +103,7 @@ class OrderController extends Controller
         return view('backend.orders.detail')->with([
             'order' => $order,
             'user' => $user,
-            'products' => $products,
+            'attributes' => $attributes,
         ]);
     }
 
