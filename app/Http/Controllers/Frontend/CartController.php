@@ -16,6 +16,7 @@ class CartController extends Controller
         return view('frontend.cart.list')->with([
             'items' => $items
         ]);
+        
     }
     public function add(Request $request)
     {
